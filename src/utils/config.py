@@ -33,9 +33,9 @@ class Config(BaseSettings):
     practical_weight: float = Field(default=0.1, env="PRACTICAL_WEIGHT")
     min_passing_score: float = Field(default=70.0, env="MIN_PASSING_SCORE")
     
-    # Database Configuration
-    database_url: str = Field(default="sqlite:///excel_interviewer.db", env="DATABASE_URL")
-    redis_url: str = Field(default="redis://localhost:6379/0", env="REDIS_URL")
+    # # Database Configuration
+    # database_url: str = Field(default="sqlite:///excel_interviewer.db", env="DATABASE_URL")
+    # redis_url: str = Field(default="redis://localhost:6379/0", env="REDIS_URL")
     
     # Dashboard Configuration
     dashboard_theme: str = Field(default="light", env="DASHBOARD_THEME")

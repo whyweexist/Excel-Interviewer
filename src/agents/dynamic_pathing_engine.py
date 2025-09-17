@@ -10,7 +10,7 @@ from langchain.prompts import ChatPromptTemplate
 
 from ..utils.config import Config
 from ..utils.logger import get_logger
-from .conversation_state import InterviewContext, Question, Answer, EvaluationResult, DifficultyLevel, QuestionType
+from ..interview.conversation_state import InterviewContext, Question, Answer, EvaluationResult, DifficultyLevel, QuestionType
 
 logger = get_logger(__name__)
 
