@@ -1,0 +1,42 @@
+# Core AI/ML Dependencies
+openai>=1.0.0
+langchain>=0.1.0
+langchain-openai>=0.0.5
+langchain-community>=0.0.20
+
+# Web Framework and UI
+streamlit>=1.28.0
+streamlit-chat>=0.1.1
+streamlit-aggrid>=0.3.4
+
+# Data Processing and Analysis
+pandas>=2.0.0
+numpy>=1.24.0
+openpyxl>=3.1.0
+xlsxwriter>=3.1.0
+
+# Visualization
+plotly>=5.17.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Advanced Analytics
+scikit-learn>=1.3.0
+scipy>=1.11.0
+
+# Database and State Management
+sqlite3
+redis>=5.0.0
+pydantic>=2.4.0
+
+# Utilities
+python-dotenv>=1.0.0
+typing-extensions>=4.8.0
+colorama>=0.4.6
+tqdm>=4.66.0
+
+# Development and Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+black>=23.9.0
+flake8>=6.1.0
