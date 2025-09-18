@@ -73,14 +73,29 @@ class ComprehensiveEvaluation:
         return "Unknown"
 
 class AnswerEvaluator:
-    def __init__(self):
+    # class AnswerEvaluator:
+    def __init__(self, config=None):
+        # Use passed config if available, else fallback to global settings
+        self.config = config or settings
+
         self.llm = ChatOpenAI(
-            model=settings.OPENAI_MODEL,
-            temperature=settings.OPENAI_TEMPERATURE,
-            api_key=settings.OPENAI_API_KEY
+            model=self.config.openai_model,
+            temperature=self.config.openai_temperature,
+            api_key=self.config.openai_api_key
+            # temperature=self.config.OPENAI_TEMPERATURE,
+            # api_key=self.config.OPENAI_API_KEY
         )
         self.evaluation_prompts = self._create_evaluation_prompts()
         self.excel_knowledge_base = self._load_excel_knowledge_base()
+
+    # def __init__(self):
+    #     self.llm = ChatOpenAI(
+    #         model=settings.OPENAI_MODEL,
+    #         temperature=settings.OPENAI_TEMPERATURE,
+    #         api_key=settings.OPENAI_API_KEY
+    #     )
+    #     self.evaluation_prompts = self._create_evaluation_prompts()
+    #     self.excel_knowledge_base = self._load_excel_knowledge_base()
         
     def _create_evaluation_prompts(self) -> Dict[EvaluationDimension, ChatPromptTemplate]:
         prompts = {}

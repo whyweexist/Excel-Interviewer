@@ -3,7 +3,9 @@ import openai
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 import json
+import asyncio
 import random
+import streamlit.runtime.scriptrunner as st_sr
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain.memory import ConversationBufferMemory
@@ -275,7 +277,7 @@ class InterviewEngine:
         
         return None
     
-    def process_answer(self, answer_text: str) -> EvaluationResult:
+    async def process_answer(self, answer_text: str) -> EvaluationResult:
         """Process the candidate's answer and return evaluation."""
         if not self.current_question:
             return None
@@ -292,7 +294,7 @@ class InterviewEngine:
         self.state_machine.record_conversation_turn("candidate", answer_text)
         
         # Evaluate the answer
-        evaluation = self.answer_evaluator.evaluate_answer(self.current_question, answer)
+        evaluation = await self.answer_evaluator.evaluate_answer(self.current_question, answer)
         
         # Update context
         context = self.state_machine.get_context()
@@ -457,9 +459,21 @@ class InterviewEngine:
                 if st.button("Submit Answer", type="primary"):
                     if answer_text:
                         with st.spinner("Evaluating your answer..."):
-                            evaluation = self.process_answer(answer_text)
+                            try:
+                                loop = asyncio.get_event_loop()
+                            except RuntimeError:
+                            # If no loop exists (rare in Streamlit), create one
+                                loop = asyncio.new_event_loop()
+                                asyncio.set_event_loop(loop)
+                        
+                            evaluation = loop.run_until_complete(self.process_answer(answer_text))
+
                             self._display_evaluation(evaluation)
                             self.current_question = None  # Reset for next question
+                            # loop = st_sr.get_loop()
+                            # evaluation = loop.run_until_complete(self.process_answer(answer_text))
+                            # self._display_evaluation(evaluation)
+                            # self.current_question = None  # Reset for next question
                     else:
                         st.warning("Please provide an answer before submitting.")
             

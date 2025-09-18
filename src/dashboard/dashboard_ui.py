@@ -1108,5 +1108,82 @@ def render_dashboard():
     """Main function to render the dashboard"""
     dashboard_ui.render_dashboard()
 
+def render_skill_heatmap(competency_data=None):
+    """
+    Public API function to render just the skill heatmap.
+    This wraps DashboardUI._render_skill_heatmap_tab().
+    """
+    if competency_data:
+        dashboard_ui.current_competency_data = competency_data
+    if not dashboard_ui.current_competency_data:
+        st.warning("No competency data available to render heatmap.")
+        return
+    dashboard_ui._render_skill_heatmap_tab()
+def render_performance_radar(competency_data=None):
+    """
+    Public API function to render the performance radar chart.
+    This wraps the radar chart generation logic from DashboardUI.
+    """
+    if competency_data:
+        dashboard_ui.current_competency_data = competency_data
+    if not dashboard_ui.current_competency_data:
+        st.warning("No competency data available to render radar chart.")
+        return
+
+    try:
+        figures = dashboard_ui.dashboard_engine.generate_comprehensive_dashboard(
+            dashboard_ui.current_competency_data
+        )
+        radar_fig = figures["performance_radar"]
+        st.plotly_chart(radar_fig, use_container_width=True, key="performance_radar_standalone")
+    except Exception as e:
+        st.error(f"Error rendering radar chart: {str(e)}")
+        logger.error(f"Radar chart rendering error: {str(e)}")
+
+def render_trend_analysis(competency_data=None):
+    """
+    Public API function to render the performance trend analysis chart.
+    This wraps the trend analysis logic from DashboardUI.
+    """
+    if competency_data:
+        dashboard_ui.current_competency_data = competency_data
+    if not dashboard_ui.current_competency_data:
+        st.warning("No competency data available to render trend analysis.")
+        return
+
+    try:
+        figures = dashboard_ui.dashboard_engine.generate_comprehensive_dashboard(
+            dashboard_ui.current_competency_data
+        )
+        trend_fig = figures["performance_trend"]
+        st.plotly_chart(trend_fig, use_container_width=True, key="performance_trend_standalone")
+        dashboard_ui._render_trend_insights()
+        dashboard_ui._render_progress_indicators()
+    except Exception as e:
+        st.error(f"Error rendering trend analysis: {str(e)}")
+        logger.error(f"Trend analysis rendering error: {str(e)}")
+
+def render_skill_distribution(competency_data=None):
+    """
+    Public API function to render the skill distribution chart.
+    This wraps the skill distribution logic from DashboardUI.
+    """
+    if competency_data:
+        dashboard_ui.current_competency_data = competency_data
+    if not dashboard_ui.current_competency_data:
+        st.warning("No competency data available to render skill distribution.")
+        return
+
+    try:
+        figures = dashboard_ui.dashboard_engine.generate_comprehensive_dashboard(
+            dashboard_ui.current_competency_data
+        )
+        distribution_fig = figures["skill_distribution"]
+        st.plotly_chart(distribution_fig, use_container_width=True, key="skill_distribution_standalone")
+    except Exception as e:
+        st.error(f"Error rendering skill distribution: {str(e)}")
+        logger.error(f"Skill distribution rendering error: {str(e)}")
+
+
 if __name__ == "__main__":
     render_dashboard()
