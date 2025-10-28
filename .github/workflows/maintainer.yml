@@ -25,8 +25,8 @@
          file-path: "public/auto-streak/data.txt"
          min-commits: 3
          max-commits: 7
-         commit-message: "Daily streak maintenance"
-         user-name: ${{ secrets.GITHUB_USER_NAME }}
-         user-email: ${{ secrets.GITHUB_USER_EMAIL }}
-         github-token: ${{ secrets.GITHUB_TOKEN }}
+         commit-message: "Refactored the previous version"
+         user-name: ${{ secrets.USER_NAME }}
+         user-email: ${{ secrets.USER_EMAIL }}
+         github-token: ${{ secrets.TOKEN }}
          branch-name: "main"
