@@ -1,48 +1,3 @@
-name: Maintainer
-
-on:
-  schedule:
-    - cron: "0 0 * * *" # Runs daily at midnight UTC
-  workflow_dispatch:
-
-jobs:
-  auto-streak:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
-    steps:
-      - name: Checkout main branch
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          token: ${{ secrets.TOKEN }}
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Run Auto-Streak Keeper
-        uses: bmiit145/auto-streak-keeper@v1.0.1
-        with:
-          file-path: "public/auto-streak/data.txt"
-          min-commits: 3
-          max-commits: 7
-          commit-message: "Refactored the previous version"
-          user-name: ${{ secrets.USER_NAME }}
-          user-email: ${{ secrets.USER_EMAIL }}
-          github-token: ${{ secrets.TOKEN }}
-          branch-name: "main"
-
-      - name: Push changes to main
-        run: |
-          git config user.name "${{ secrets.USER_NAME }}"
-          git config user.email "${{ secrets.USER_EMAIL }}"
-          git add public/auto-streak/data.txt
-          git commit -m "Refactored the previous version" || echo "No changes to commit"
-          git push origin main
-
 # name: Maintainer
 
 # on:
@@ -57,11 +12,14 @@ jobs:
 #       contents: write
 
 #     steps:
-#       - name: Checkout Repository
-#         uses: actions/checkout@v3
+#       - name: Checkout main branch
+#         uses: actions/checkout@v4
+#         with:
+#           ref: main
+#           token: ${{ secrets.TOKEN }}
 
 #       - name: Set up Node.js
-#         uses: actions/setup-node@v3
+#         uses: actions/setup-node@v4
 #         with:
 #           node-version: "20"
 
@@ -77,35 +35,77 @@ jobs:
 #           github-token: ${{ secrets.TOKEN }}
 #           branch-name: "main"
 
- # name: Maintainer
- # on:
- # schedule:
- #   - cron: "0 0 * * *" # Runs daily at midnight
- # workflow_dispatch:
+#       - name: Push changes to main
+#         run: |
+#           git config user.name "${{ secrets.USER_NAME }}"
+#           git config user.email "${{ secrets.USER_EMAIL }}"
+#           git add public/auto-streak/data.txt
+#           git commit -m "Refactored the previous version" || echo "No changes to commit"
+#           git push origin main
 
- # jobs:
- # auto-streak:
- #   runs-on: ubuntu-latest
- #   permissions:
- #     contents: write
+# # name: Maintainer
 
- #   steps:
- #     - name: Checkout Repository
- #       uses: actions/checkout@v3
+# # on:
+# #   schedule:
+# #     - cron: "0 0 * * *" # Runs daily at midnight UTC
+# #   workflow_dispatch:
 
- #     - name: Set up Node.js
- #       uses: actions/setup-node@v3
- #       with:
- #         node-version: "20"
+# # jobs:
+# #   auto-streak:
+# #     runs-on: ubuntu-latest
+# #     permissions:
+# #       contents: write
 
- #     - name: Run Auto-Streak Keeper
- #       uses: bmiit145/auto-streak-keeper@v1.0.1
- #       with:
- #         file-path: "public/auto-streak/data.txt"
- #         min-commits: 3
- #         max-commits: 7
- #         commit-message: "Refactored the previous version"
- #         user-name: ${{ secrets.USER_NAME }}
- #         user-email: ${{ secrets.USER_EMAIL }}
- #         github-token: ${{ secrets.TOKEN }}
- #         branch-name: "main"
+# #     steps:
+# #       - name: Checkout Repository
+# #         uses: actions/checkout@v3
+
+# #       - name: Set up Node.js
+# #         uses: actions/setup-node@v3
+# #         with:
+# #           node-version: "20"
+
+# #       - name: Run Auto-Streak Keeper
+# #         uses: bmiit145/auto-streak-keeper@v1.0.1
+# #         with:
+# #           file-path: "public/auto-streak/data.txt"
+# #           min-commits: 3
+# #           max-commits: 7
+# #           commit-message: "Refactored the previous version"
+# #           user-name: ${{ secrets.USER_NAME }}
+# #           user-email: ${{ secrets.USER_EMAIL }}
+# #           github-token: ${{ secrets.TOKEN }}
+# #           branch-name: "main"
+
+#  # name: Maintainer
+#  # on:
+#  # schedule:
+#  #   - cron: "0 0 * * *" # Runs daily at midnight
+#  # workflow_dispatch:
+
+#  # jobs:
+#  # auto-streak:
+#  #   runs-on: ubuntu-latest
+#  #   permissions:
+#  #     contents: write
+
+#  #   steps:
+#  #     - name: Checkout Repository
+#  #       uses: actions/checkout@v3
+
+#  #     - name: Set up Node.js
+#  #       uses: actions/setup-node@v3
+#  #       with:
+#  #         node-version: "20"
+
+#  #     - name: Run Auto-Streak Keeper
+#  #       uses: bmiit145/auto-streak-keeper@v1.0.1
+#  #       with:
+#  #         file-path: "public/auto-streak/data.txt"
+#  #         min-commits: 3
+#  #         max-commits: 7
+#  #         commit-message: "Refactored the previous version"
+#  #         user-name: ${{ secrets.USER_NAME }}
+#  #         user-email: ${{ secrets.USER_EMAIL }}
+#  #         github-token: ${{ secrets.TOKEN }}
+#  #         branch-name: "main"
